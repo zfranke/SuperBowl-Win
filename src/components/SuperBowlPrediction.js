@@ -19,8 +19,8 @@ const buttonStyle = css`
         background: linear-gradient(45deg, #FF8E53 30%, #FE6B8B 90%);
         cursor: pointer;
     }
+    display: flex;
 `;
-
 
 const cardStyle = css`
     width: 45%;
@@ -38,6 +38,7 @@ const logoStyle = css`
 const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
   const [superBowlPrediction, setSuperBowlPrediction] = useState([]);
   const [winnerPrediction, setWinnerPrediction] = useState("");
+  const [superBowlPredictionPickFlag, setSuperBowlPredictionPickFlag] = useState(false);
 
   const handlePrediction = () => {
     const randomNfcTeam = nfcTeams[Math.floor(Math.random() * nfcTeams.length)];
@@ -52,7 +53,7 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
     else {
         setWinnerPrediction(randomAfcTeam.name);
     }
-    
+    setSuperBowlPredictionPickFlag(true);
   };
 
 
@@ -96,6 +97,7 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
         </div>
         <h2>Super Bowl Winner - Prediction</h2>
           <Card css={cardStyle}>
+            {superBowlPredictionPickFlag &&
             <CardContent>
               <img
                 src={superBowlPrediction.find(team => team.name === winnerPrediction)?.logoUrl}
@@ -103,11 +105,14 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
                 css={logoStyle}
               />
               <Typography variant="h5" component="h2">
-                {winnerPrediction}
+                
+                {superBowlPredictionPickFlag ? winnerPrediction : ""}
+
               </Typography>
             </CardContent>
+            }
           </Card>
-          <Button onClick={handlePrediction} css={buttonStyle}>
+          <Button variant="contained" onClick={handlePrediction} css={buttonStyle}>
             Predict
           </Button>
       </Grid>

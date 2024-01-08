@@ -39,6 +39,7 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
   const [superBowlPrediction, setSuperBowlPrediction] = useState([]);
   const [winnerPrediction, setWinnerPrediction] = useState("");
   const [superBowlPredictionPickFlag, setSuperBowlPredictionPickFlag] = useState(false);
+  const [showSuperBowlPrediction, setShowSuperBowlPrediction] = useState(false);
 
   const handlePrediction = () => {
     const randomNfcTeam = nfcTeams[Math.floor(Math.random() * nfcTeams.length)];
@@ -53,6 +54,7 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
     else {
         setWinnerPrediction(randomAfcTeam.name);
     }
+    setShowSuperBowlPrediction(true);
     setSuperBowlPredictionPickFlag(true);
   };
 
@@ -95,7 +97,10 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
           </Card>
         ))}
         </div>
-        <h2>Super Bowl Winner - Prediction</h2>
+        {showSuperBowlPrediction && (
+          <>
+          
+        <h2>Winner Prediction</h2>
           <Card css={cardStyle}>
             {superBowlPredictionPickFlag &&
             <CardContent>
@@ -105,17 +110,19 @@ const SuperBowlPrediction = ({ nfcTeams, afcTeams }) => {
                 css={logoStyle}
               />
               <Typography variant="h5" component="h2">
-                
                 {superBowlPredictionPickFlag ? winnerPrediction : ""}
 
               </Typography>
             </CardContent>
             }
           </Card>
+          </>
+        )}
           <Button variant="contained" onClick={handlePrediction} css={buttonStyle}>
             Predict
           </Button>
-      </Grid>
+      </Grid> 
+        
 
       <Grid item xs={4} alignItems="right" justifyContent="right">
         <h2>NFC Teams</h2>
